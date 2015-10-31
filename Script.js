@@ -48,13 +48,27 @@ function playerStats() {
 
         },
         success: function (resp) {
-			champStats = resp["champions"][0].id;
+			//champStats = resp["champions"][0].id;
 			var index;
-			/*for(index = 0; index < champStats.length; index++)
+			for(index = 0; index < resp["champions"].length; index++)
 			{
-				
-			}*/  
-            document.getElementById("cID0").innerHTML = champStats;
+				champStats = resp["champions"][index];
+				if(champStats.id == 0)
+				{
+					document.getElementById("cID0").innerHTML = champStats.id;
+					stats = champStats.stats;
+					wins = stats.totalSessionsWon;
+					losses = stats.totalSessionsLost;
+					winrate = wins/(losses+wins);
+					
+					
+					document.getElementById("totalWins").innerHTML = wins;
+					document.getElementById("totalLosses").innerHTML = losses;
+					document.getElementById("winRate").innerHTML = winrate;
+				}
+					
+			} 
+            
 
         },
 
