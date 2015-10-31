@@ -1,11 +1,13 @@
-var API_KEY = "";
+var API_KEY = "cd45f090-7b54-4f95-99ea-7e291c3263e2";
 var SUMMONER_NAME = "";
+var champIDs;
 
 function summonerLookUp() {
     
     SUMMONER_NAME = $("#userName").val();
-    API_KEY = "cd45f090-7b54-4f95-99ea-7e291c3263e2";
-
+	champName = $("#championPlayed").val();
+	getStatics();
+	//alert("hello");
     if (SUMMONER_NAME !== "") {
 
         $.ajax({
@@ -26,10 +28,12 @@ function summonerLookUp() {
 
                 document.getElementById("sLevel").innerHTML = summonerLevel;
                 document.getElementById("sID").innerHTML = summonerID;
-                document.getElementById("iID").innerHTML = iconID;
+                //document.getElementById("iID").innerHTML = iconID;
 
-                letsGetMasteries();
-				playerStats();
+                //letsGetMasteries();
+				//alert(champName);
+				//alert(champID)
+				playerStats(champIDs[champName]);
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("error getting Summoner data!");
@@ -38,8 +42,9 @@ function summonerLookUp() {
     } else {}  
 }
 
-function playerStats() {
+function playerStats(champID) {
 	
+	//alert("hello");
     $.ajax({
         url: "https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/" + summonerID + "/ranked?season=SEASON2015&api_key=" + API_KEY,
         type: 'GET',
@@ -53,17 +58,19 @@ function playerStats() {
 			for(index = 0; index < resp["champions"].length; index++)
 			{
 				champStats = resp["champions"][index];
-				if(champStats.id == 0)
+				if(champStats.id == champID)
 				{
-					document.getElementById("cID0").innerHTML = champStats.id;
+					//alert("success");
+					//document.getElementById("cID0").innerHTML = champStats.id;
 					stats = champStats.stats;
 					wins = stats.totalSessionsWon;
 					losses = stats.totalSessionsLost;
 					winrate = wins/(losses+wins);
+					gamesPlayed = wins + losses;
 					
-					
-					document.getElementById("totalWins").innerHTML = wins;
-					document.getElementById("totalLosses").innerHTML = losses;
+					//document.getElementById("totalWins").innerHTML = wins;
+					//document.getElementById("totalLosses").innerHTML = losses;
+					document.getElementById("totalGames").innerHTML = gamesPlayed;
 					document.getElementById("winRate").innerHTML = winrate;
 				}
 					
@@ -76,9 +83,28 @@ function playerStats() {
             alert("error getting Summoner data 2!");
         }
     });	
-	
 }
 
+function getStatics() {
+	
+	//alert("hello");
+    $.ajax({
+		async: false,
+        url: "https://global.api.pvp.net/api/lol/static-data/na/v1.2/champion?api_key=" + API_KEY, 
+        type: 'GET',
+        dataType: 'json',
+        data: {
+
+        },
+        success: function (resp) {
+			champIDs = resp["data"];
+        },
+
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("error getting Summoner data 2!");
+        }
+    });	
+}
 
 function letsGetMasteries() {
     $.ajax({
