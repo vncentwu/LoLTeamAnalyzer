@@ -1,13 +1,9 @@
-var JSON_Encoded;
-var JSON_Decoded;
+var API_KEY = "";
+var SUMMONER_NAME = "";
 
 function summonerLookUp() {
-    var SUMMONER_NAME = "";
-    SUMMONER_NAME = $("#userName").val();
     
-
-
-    var API_KEY = "";
+    SUMMONER_NAME = $("#userName").val();
     API_KEY = "cd45f090-7b54-4f95-99ea-7e291c3263e2";
 
     if (SUMMONER_NAME !== "") {
@@ -32,7 +28,8 @@ function summonerLookUp() {
                 document.getElementById("sID").innerHTML = summonerID;
                 document.getElementById("iID").innerHTML = iconID;
 
-                letsGetMasteries(summonerID, API_KEY);
+                letsGetMasteries();
+				playerStats();
             },
             error: function (XMLHttpRequest, textStatus, errorThrown) {
                 alert("error getting Summoner data!");
@@ -41,7 +38,35 @@ function summonerLookUp() {
     } else {}  
 }
 
-function letsGetMasteries(summonerID, API_KEY) {
+function playerStats() {
+	
+    $.ajax({
+        url: "https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/" + summonerID + "/ranked?season=SEASON2015&api_key=" + API_KEY,
+        type: 'GET',
+        dataType: 'json',
+        data: {
+
+        },
+        success: function (resp) {
+			champStats = resp["champions"][0].id;
+			var index;
+			/*for(index = 0; index < champStats.length; index++)
+			{
+				
+			}*/  
+            document.getElementById("cID0").innerHTML = champStats;
+
+        },
+
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+            alert("error getting Summoner data 2!");
+        }
+    });	
+	
+}
+
+
+function letsGetMasteries() {
     $.ajax({
         url: "https://na.api.pvp.net/api/lol/na/v1.4/summoner/" + summonerID + "/masteries?api_key=" + API_KEY,
         type: 'GET',
