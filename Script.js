@@ -1,77 +1,94 @@
 var API_KEY = "cd45f090-7b54-4f95-99ea-7e291c3263e2";
-var SUMMONER_NAME = "";
+
+/*var SUMMONER_NAME = "";
+var SUMMONER_NAME_2 = "";
+var SUMMONER_NAME_3 = "";
+var SUMMONER_NAME_4 = "";
+var SUMMONER_NAME_5 = "";
+var champName = "";
+var champName_2 = "";
+var champName_3 = "";
+var champName_4 = "";
+var champName_5 = "";*/
+
 var champIDs;
+var summonerNames = ["none", "none", "none", "none", "none"];
+var champNames = ["none", "none", "none", "none", "none"];
+var IDs = [0, 0, 0, 0, 0];
+var levels = [0, 0, 0, 0, 0];
 
 function summonerLookUp() {
-    
-    SUMMONER_NAME = $("#userName").val();
-	champName = $("#championPlayed").val();
+
+	
+	var SUMMONER_NAME;
+	var i;
+	for(i = 1; i < 6; i++)
+	{
+		summonerNames[i-1] = $("#userName" + i).val();
+		champNames[i-1] = $("#championPlayed" + i).val();
+	}
 	getStatics();
-	//alert("hello");
-    if (SUMMONER_NAME !== "") {
+	var j;
+	for(j = 0; j < 5; j++)
+	{
+		SUMMONER_NAME = summonerNames[j];
+		
+	    if (SUMMONER_NAME !== "") {
+			$.ajax({
+				async: false,
+				url: 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + SUMMONER_NAME + '?api_key=' + API_KEY,
+				type: 'GET',
+				dataType: 'json',
+				data: {
 
-        $.ajax({
-            url: 'https://na.api.pvp.net/api/lol/na/v1.4/summoner/by-name/' + SUMMONER_NAME + '?api_key=' + API_KEY,
-            type: 'GET',
-            dataType: 'json',
-            data: {
+				},
+				success: function (json) {
+					var SUMMONER_NAME_NOSPACES = SUMMONER_NAME.replace(" ", "");
+					SUMMONER_NAME_NOSPACES = SUMMONER_NAME_NOSPACES.toLowerCase().trim();
+					levels[j] = json[SUMMONER_NAME_NOSPACES].summonerLevel;				
+					IDs[j] = json[SUMMONER_NAME_NOSPACES].id;
+					document.getElementById("sLevel" + (j+1)).innerHTML = levels[j];
+					playerStats(j);
+				},
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
+					alert("error getting Summoner data!");
+				}
+			});
+    } else {}  	
+	}
 
-            },
-            success: function (json) {
-                var SUMMONER_NAME_NOSPACES = SUMMONER_NAME.replace(" ", "");
-
-                SUMMONER_NAME_NOSPACES = SUMMONER_NAME_NOSPACES.toLowerCase().trim();
-
-                summonerLevel = json[SUMMONER_NAME_NOSPACES].summonerLevel;
-                summonerID = json[SUMMONER_NAME_NOSPACES].id;
-                iconID = json[SUMMONER_NAME_NOSPACES].profileIconId;
-
-                document.getElementById("sLevel").innerHTML = summonerLevel;
-                document.getElementById("sID").innerHTML = summonerID;
-                //document.getElementById("iID").innerHTML = iconID;
-
-                //letsGetMasteries();
-				//alert(champName);
-				//alert(champID)
-				playerStats(champIDs[champName]);
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) {
-                alert("error getting Summoner data!");
-            }
-        });
-    } else {}  
 }
 
-function playerStats(champID) {
+function playerStats(i) {
 	
-	//alert("hello");
+	var champID = 0;
+	if(champNames[i] !== "")
+		champID = champIDs[champNames[i]].id;
+	
     $.ajax({
-        url: "https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/" + summonerID + "/ranked?season=SEASON2015&api_key=" + API_KEY,
+        url: "https://na.api.pvp.net/api/lol/na/v1.3/stats/by-summoner/" + IDs[i] + "/ranked?season=SEASON2015&api_key=" + API_KEY,
         type: 'GET',
         dataType: 'json',
         data: {
 
         },
         success: function (resp) {
-			//champStats = resp["champions"][0].id;
+			//alert("hi");
 			var index;
+			document.getElementById("totalGames" + (i+1)).innerHTML = 0;
+			document.getElementById("winRate" + (i+1)).innerHTML = 0;
 			for(index = 0; index < resp["champions"].length; index++)
 			{
 				champStats = resp["champions"][index];
 				if(champStats.id == champID)
 				{
-					//alert("success");
-					//document.getElementById("cID0").innerHTML = champStats.id;
 					stats = champStats.stats;
 					wins = stats.totalSessionsWon;
 					losses = stats.totalSessionsLost;
 					winrate = wins/(losses+wins);
 					gamesPlayed = wins + losses;
-					
-					//document.getElementById("totalWins").innerHTML = wins;
-					//document.getElementById("totalLosses").innerHTML = losses;
-					document.getElementById("totalGames").innerHTML = gamesPlayed;
-					document.getElementById("winRate").innerHTML = winrate;
+					document.getElementById("totalGames" + (i+1)).innerHTML = gamesPlayed;
+					document.getElementById("winRate" + (i+1)).innerHTML = winrate;
 				}
 					
 			} 
@@ -97,6 +114,7 @@ function getStatics() {
 
         },
         success: function (resp) {
+			
 			champIDs = resp["data"];
         },
 
