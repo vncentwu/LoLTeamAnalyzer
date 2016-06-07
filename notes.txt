@@ -1,0 +1,6 @@
+HTML - website
+Javascript - scripts
+JSON - Parse objects
+Ajax - HTML requests
+jQuery
+

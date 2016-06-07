@@ -11,87 +11,97 @@ table, th, td {
     border-collapse: collapse;
 }
 </style>
-
-
 <body>
+<img src="logo.png" alt="Logo" style="width:600px;height:225px;">
 
-<table style="width:100%">
+<div class="datagrid">
+<table width = "50%">
+<thead><tr><th>NAME</th><th>CHAMPION</th><th>LEVEL</th><th>GAMES PLAYED</th><th>WINRATE</th></tr></thead>
+<tbody>
   <tr>
-    <td>NAME</td>
-    <td>CHAMPION</td>		
-    <td>LEVEL</td>
-	<td>GAMES PLAYED</td>
-	<td>WINRATE</td>
-  </tr>
-  <tr>
-    <td><input id="userName1" /></td>
-    <td><input id = "championPlayed1"/></td>		
+    <td><input id="userName1" value="vncentwu"/></td>
+    <td><input id = "championPlayed1" value = "Gragas"/></td>   
     <td><span id="sLevel1"></span></td>
-	<td><span id="totalGames1"></span></td>
-	<td><span id="winRate1"></span></td>
+    <td><span id="totalGames1"></span></td>
+    <td><span id="winRate1"></span></td>
   </tr>
-  <tr>
-    <td><input id="userName2" /></td>
-    <td><input id = "championPlayed2"/></td>		
+  <tr class="alt">    
+    <td><input id="userName2" value = "vncntwu"/></td>
+    <td><input id = "championPlayed2"/></td>    
     <td><span id="sLevel2"></span></td>
-	<td><span id="totalGames2"></span></td>
-	<td><span id="winRate2"></span></td>
+    <td><span id="totalGames2"></span></td>
+    <td><span id="winRate2"></span></td>
   </tr>
   <tr>
-    <td><input id="userName3" /></td>
-    <td><input id = "championPlayed3"/></td>		
+    <td><input id="userName3" value="vncentwu"/></td>
+    <td><input id = "championPlayed3" value = "Gragas"/></td>   
     <td><span id="sLevel3"></span></td>
-	<td><span id="totalGames3"></span></td>
-	<td><span id="winRate3"></span></td>
+    <td><span id="totalGames3"></span></td>
+    <td><span id="winRate3"></span></td>
   </tr>
-  <tr>
-    <td><input id="userName4" /></td>
-    <td><input id = "championPlayed4"/></td>		
+  <tr class="alt">    
+    <td><input id="userName4" value = "vncntwu"/></td>
+    <td><input id = "championPlayed4"/></td>    
     <td><span id="sLevel4"></span></td>
-	<td><span id="totalGames4"></span></td>
-	<td><span id="winRate4"></span></td>
+    <td><span id="totalGames4"></span></td>
+    <td><span id="winRate4"></span></td>
   </tr>
   <tr>
-    <td><input id="userName5" /></td>
-    <td><input id = "championPlayed5"/></td>		
+    <td><input id="userName5" value="vncentwu"/></td>
+    <td><input id = "championPlayed5" value = "Gragas"/></td>   
     <td><span id="sLevel5"></span></td>
-	<td><span id="totalGames5"></span></td>
-	<td><span id="winRate5"></span></td>
+    <td><span id="totalGames5"></span></td>
+    <td><span id="winRate5"></span></td>
   </tr>  
-</table>
-</br>
+</tbody>
+</table></div>
 
-<!--Summoner Name
+<div class="datagrid2">
+<table width = "50%">
+<thead><tr><th>NAME</th><th>CHAMPION</th><th>LEVEL</th><th>GAMES PLAYED</th><th>WINRATE</th></tr></thead>
+<!--tfoot><tr><td colspan="5"><div id="paging"><ul><li><a href="#"><span>Previous</span></a></li><li><a href="#" class="active"><span>1</span></a></li><li><a href="#"><span>2</span></a></li><li><a href="#"><span>3</span></a></li><li><a href="#"><span>4</span></a></li><li><a href="#"><span>5</span></a></li><li><a href="#"><span>Next</span></a></li></ul></div></tr></tfoot-->
+
+<tbody>
+  <tr>
+    <td><input id="userName6" value="vncentwu"/></td>
+    <td><input id = "championPlayed6" value = "Gragas"/></td>   
+    <td><span id="sLevel6"></span></td>
+    <td><span id="totalGames6"></span></td>
+    <td><span id="winRate6"></span></td>
+  </tr>
+  <tr class="alt">    
+    <td><input id="userName7" value = "vncntwu"/></td>
+    <td><input id = "championPlayed7"/></td>    
+    <td><span id="sLevel7"></span></td>
+    <td><span id="totalGames7"></span></td>
+    <td><span id="winRate7"></span></td>
+  </tr>
+  <tr>
+    <td><input id="userName8" value="vncentwu"/></td>
+    <td><input id = "championPlayed8" value = "Gragas"/></td>   
+    <td><span id="sLevel8"></span></td>
+    <td><span id="totalGames8"></span></td>
+    <td><span id="winRate8"></span></td>
+  </tr>
+  <tr class="alt">    
+    <td><input id="userName9" value = "vncntwu"/></td>
+    <td><input id = "championPlayed9"/></td>    
+    <td><span id="sLevel9"></span></td>
+    <td><span id="totalGames9"></span></td>
+    <td><span id="winRate9"></span></td>
+  </tr>
+  <tr>
+    <td><input id="userName10" value=""/></td>
+    <td><input id = "championPlayed10" value = ""/></td>   
+    <td><span id="sLevel10"></span></td>
+    <td><span id="totalGames10"></span></td>
+    <td><span id="winRate10"></span></td>
+  </tr>  
+</tbody>
+</table></div>
 <br />
-<input id="userName" />
-<br />
-Champion Played
-<br />
-<input id = "championPlayed"/>
-<br /> -->
 <input type="submit" onclick="summonerLookUp();" />
 <br />
-<!--
-<br />Summoner Level: <span id="sLevel"></span>
-
-<br />Summoner ID: <span id="sID"></span>
-
-<!-- <br />Profile Icon ID: <span id="iID"></span>
-
-<br />Number of mastery pages: <span id="masteryPageCount"></span>
-
-<br />Name of first page: <span id="masteryPages1st"></span>
-
-<br />ID of first mastery on page: <span id="m0id"></span>
-
-<br />ID of first champ stat: <span id="cID0"></span>
-
-<br />Total wins: <span id="totalWins"></span>
-
-<br />Total losses: <span id="totalLosses"></span> -->
-<!--<br />Games played: <span id="totalGames"></span>
-
-<br />Win rate: <span id="winRate"></span> -->
 <br />
 <br />
 <hr />
